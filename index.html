@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Boot SSE with JavaScript</title>
+</head>
+<body>
+<h2>📢 Real-Time Notifications</h2>
+<button onclick="sendNotification()">Send Notification</button>
+<ul id="messages"></ul>
+
+<script>
+    // Connect to SSE server
+    let eventSource = new EventSource("http://localhost:8080/java-event/api/reactions/subscribe");
+
+    eventSource.onmessage = function(event) {
+        console.warn(event);
+        const messageList = document.getElementById("messages");
+        const listItem = document.createElement("li");
+        listItem.textContent = event.data;
+        messageList.appendChild(listItem);
+    };
+
+    eventSource.onerror = function() {
+        console.log("SSE Disconnected. Reconnecting...");
+        eventSource.close();
+        setTimeout(() => {
+            eventSource = new EventSource("http://localhost:8080/java-event/api/reactions/subscribe");
+        }, 5000);
+    };
+
+    function sendNotification() {
+        const reaction = { eventId: 1, emoji: "hello", userId: 'user123' };
+        console.warn(reaction, JSON.stringify(reaction));
+        fetch("http://localhost:8080/java-event/api/reactions", {
+            method: "POST",
+            body: JSON.stringify(reaction),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(response => console.log("Notification sent!"));
+    }
+</script>
+</body>
+</html>
