@@ -1,4 +1,4 @@
-package com.tihor.java_event;
+package com.demo.java_event;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

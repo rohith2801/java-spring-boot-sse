@@ -1,4 +1,4 @@
-package com.tihor.java_event;
+package com.demo.java_event;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

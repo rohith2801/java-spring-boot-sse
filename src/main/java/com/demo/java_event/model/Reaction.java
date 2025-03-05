@@ -1,4 +1,4 @@
-package com.tihor.java_event.model;
+package com.demo.java_event.model;
 
 import lombok.Data;
 

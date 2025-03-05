@@ -1,4 +1,4 @@
-package com.tihor.java_event.config;
+package com.demo.java_event.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

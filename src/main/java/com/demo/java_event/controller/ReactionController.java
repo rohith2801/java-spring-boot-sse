@@ -1,7 +1,7 @@
-package com.tihor.java_event.controller;
+package com.demo.java_event.controller;
 
-import com.tihor.java_event.model.Reaction;
-import com.tihor.java_event.service.ReactionService;
+import com.demo.java_event.model.Reaction;
+import com.demo.java_event.service.ReactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

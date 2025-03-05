@@ -1,6 +1,6 @@
-package com.tihor.java_event.service;
+package com.demo.java_event.service;
 
-import com.tihor.java_event.model.Reaction;
+import com.demo.java_event.model.Reaction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
