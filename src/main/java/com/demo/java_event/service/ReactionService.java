@@ -1,19 +1,16 @@
 package com.demo.java_event.service;
 
 import com.demo.java_event.model.Reaction;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class ReactionService {
-    private final List<Reaction> reactions;
+    private List<Reaction> reactions = new ArrayList<>();
     private SseEmitter sseEmitter;
 
     public String saveReaction(final Reaction reaction) throws IOException {

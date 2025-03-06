@@ -2,7 +2,7 @@ package com.demo.java_event.controller;
 
 import com.demo.java_event.model.Reaction;
 import com.demo.java_event.service.ReactionService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,10 +13,9 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
 @RequestMapping("/api/reactions")
-@RequiredArgsConstructor
 public class ReactionController {
-
-    private final ReactionService reactionService;
+    @Autowired
+    private ReactionService reactionService;
 
     @PostMapping
     public ResponseEntity<Void> saveReaction(@RequestBody Reaction reaction) throws Exception {
