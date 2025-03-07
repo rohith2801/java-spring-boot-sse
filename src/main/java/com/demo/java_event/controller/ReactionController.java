@@ -27,7 +27,7 @@ public class ReactionController {
     }
 
     @GetMapping("/subscribe")
-    public SseEmitter subscribe(@RequestParam(required = false, defaultValue = " #{T(java.util.UUID).randomUUID().toString()}") final UUID sessionId) {
+    public SseEmitter subscribe(@RequestParam final UUID sessionId) {
         System.out.println(sessionId);
         return reactionService.subscribe(sessionId);
     }

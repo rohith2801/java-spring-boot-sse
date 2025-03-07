@@ -15,25 +15,27 @@
     const sid = searchParams.get("sid");
 
     let counter = 1;
+    console.warn("started");
+    if (sid !== null) {
+        // Connect to SSE server
+        let eventSource = new EventSource("http://localhost:8080/java-event/api/reactions/subscribe?sessionId=" + sid);
 
-    // Connect to SSE server
-    let eventSource = new EventSource("http://localhost:8080/java-event/api/reactions/subscribe?sessionId=" + sid);
+        eventSource.onmessage = function(event) {
+            console.warn(event);
+            const messageList = document.getElementById("messages");
+            const listItem = document.createElement("li");
+            listItem.textContent = event.data;
+            messageList.appendChild(listItem);
+        };
 
-    eventSource.onmessage = function(event) {
-        console.warn(event);
-        const messageList = document.getElementById("messages");
-        const listItem = document.createElement("li");
-        listItem.textContent = event.data;
-        messageList.appendChild(listItem);
-    };
-
-    eventSource.onerror = function() {
-        console.log("SSE Disconnected. Reconnecting...");
-        eventSource.close();
-        setTimeout(() => {
-            eventSource = new EventSource("http://localhost:8080/java-event/api/reactions/subscribe");
-        }, 5000);
-    };
+        eventSource.onerror = function() {
+            console.log("SSE Disconnected. Reconnecting...");
+            eventSource.close();
+            setTimeout(() => {
+                eventSource = new EventSource("http://localhost:8080/java-event/api/reactions/subscribe");
+            }, 5000);
+        };
+    }
 
     function sendNotification() {
         const reaction = { eventId: 1, emoji: "hello", userId: sid + ":::::" + counter++ };

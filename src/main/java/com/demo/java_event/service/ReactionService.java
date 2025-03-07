@@ -5,29 +5,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class ReactionService {
-    private final List<Reaction> reactions = new ArrayList<>();
-    private final Map<UUID, SseEmitter> sseEmitters = new HashMap<>();
+    private final List<Reaction> reactions = new CopyOnWriteArrayList<>();
+    private final Map<UUID, SseEmitter> sseEmitters = new ConcurrentHashMap<>();
 
     public String saveReaction(final Reaction reaction) {
 //        reaction.setTs(LocalDateTime.now());
         reactions.add(reaction);
 
-        sseEmitters.values().forEach(sseEmitter -> {
+        sseEmitters.forEach((uuid, sseEmitter) -> {
             try {
                 sseEmitter.send(reaction);
             } catch (IOException e) {
+                System.out.println("ioexception came...." + uuid);
                 e.printStackTrace();
             } catch (IllegalStateException e) {
                 if (e.getMessage().contains("ResponseBodyEmitter is already set complete")) {
-                    sseEmitters.values().removeIf(emitter -> emitter == sseEmitter);
+                    sseEmitters.remove(uuid);
                 }
             }
         });
