@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/reactions")
@@ -24,7 +27,8 @@ public class ReactionController {
     }
 
     @GetMapping("/subscribe")
-    public SseEmitter subscribe() {
-        return reactionService.subscribe();
+    public SseEmitter subscribe(@RequestParam(required = false, defaultValue = " #{T(java.util.UUID).randomUUID().toString()}") final UUID sessionId) {
+        System.out.println(sessionId);
+        return reactionService.subscribe(sessionId);
     }
 }

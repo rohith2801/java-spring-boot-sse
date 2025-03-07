@@ -11,8 +11,13 @@
 <ul id="messages"></ul>
 
 <script>
+    const searchParams = new URLSearchParams(window.location.search);
+    const sid = searchParams.get("sid");
+
+    let counter = 1;
+
     // Connect to SSE server
-    let eventSource = new EventSource("http://localhost:8080/java-event/api/reactions/subscribe");
+    let eventSource = new EventSource("http://localhost:8080/java-event/api/reactions/subscribe?sessionId=" + sid);
 
     eventSource.onmessage = function(event) {
         console.warn(event);
@@ -31,7 +36,7 @@
     };
 
     function sendNotification() {
-        const reaction = { eventId: 1, emoji: "hello", userId: 'user123' };
+        const reaction = { eventId: 1, emoji: "hello", userId: sid + ":::::" + counter++ };
         console.warn(reaction, JSON.stringify(reaction));
         fetch("http://localhost:8080/java-event/api/reactions", {
             method: "POST",

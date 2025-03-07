@@ -49,4 +49,15 @@ public class Reaction implements Serializable {
     public void setTs(LocalDateTime ts) {
         this.ts = ts;
     }
+
+    @Override
+    public String toString() {
+        return "Reaction{" +
+                "id=" + id +
+                ", eventId='" + eventId + '\'' +
+                ", emoji='" + emoji + '\'' +
+                ", userId='" + userId + '\'' +
+                ", ts=" + ts +
+                '}';
+    }
 }
